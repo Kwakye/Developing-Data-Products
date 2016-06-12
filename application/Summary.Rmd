@@ -1,0 +1,61 @@
+---
+title: "Summary"
+author: "Owusu"
+date: "June 12, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Estimating a House Price in San Francisco
+***
+### Application Overview
+This application provides a possibility for estimation of a price for a house located in San Francisco. It consists of three tabs:
+
+1 House Price Estimation
+2 Previous House Sales
+3 About This App
+
+A brief overview of the functionality covered on each of these tabs will be provided.
+
+** House Price Estimation.** This tab provides the results of the estimation. In order to estimate the price of a house, the user needs to provide the following information:
+
+1 The year when the house of interest was built.
+2 Number of bedrooms in the house
+3 The size of the house, measured in square feet.
+4 The size of the lot, measured in square feet.
+5 The neighborhood in which the house is located.
+6 The month when the house is planned to be sold/bought.
+
+Based on this information, a price is calculated and displayed in the main part of the app.
+
+In addition, to gain an understanding on why this price was selected, a table is generated which contains records about previous sales for houses with similar characteristics. Similarity is measured based on the year when the house was built, the number of bedrooms and the neighborhood where the house is located. If at least any of these characteristics is the same as those chosen by the user, this historical record will be shown in the table.
+
+**Previous House Sales.** his tab provides insights into the complete dataset used for the prediction task. In addition to the features used for the price prediction part, several additional characteristics are provided, such as the exact address of the house.
+
+On this tab the user has a possibility to search for specific records, by entering the information of interest, such as the neighborhood name, in the Search field provided in the top right corner.
+
+**About This App.** This tab provides an explanation to the users about the possibilities provided in this app (i.e. it shows the current document).
+
+
+### Price Prediction
+
+**Dataset.** The model used for price estimation is based on the `nutshell::sanfrancisco.home.sales` dataset which contains 3281 observations of 15 variables. 
+
+```{r, echo=TRUE}
+library(nutshell)
+data(sanfrancisco.home.sales)
+
+```
+
+
+
+
+**Prediction Model.** The model used for prediction is a simple linear model defined as follows:
+
+```{r, echo=TRUE}
+model <- lm(price ~ bedrooms + squarefeet + lotsize + month + neighborhood + year, data = sanfrancisco.home.sales)
+summary(model)
+```
